@@ -51,6 +51,14 @@ Same as upstream: `./gradlew assembleCoreDebug` (JDK 21, compileSdk 36). The deb
 because Fossify Commons derives icon-alias component names from it (`<appId>.activities.SplashActivity.*`);
 renaming the id without moving the package tree breaks the icon-colour feature.
 
+## Proven setup (25 Sep 2026)
+
+DAVx5 4.5.19 (F-Droid) on a Pixel 9 API 35 emulator, account `mira@chat.localhost` against the lab Stalwart
+(`http://10.0.2.2:8081/`, "Login with URL and user name"), collection "Stalwart Calendar" enabled, then in this app
+Settings → CalDAV → Manage synced calendars → tick it. Events the Calendar agent booked on Stalwart appeared in the
+provider with `uid2445` = the agent's `event_id`, and `braxcal://event/evt_2eef6d48` opened "Meeting with Marta and
+Jonas" in the editor. Stalwart in production is one cloud instance with a tenant per hub; the app does not care.
+
 ## Trying it on an emulator
 
 ```bash
