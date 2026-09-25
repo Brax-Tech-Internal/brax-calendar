@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Kalendár</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="change_view">Zmeniť pohľad</string>
     <string name="daily_view">Denný</string>
     <string name="weekly_view">Týždenný</string>

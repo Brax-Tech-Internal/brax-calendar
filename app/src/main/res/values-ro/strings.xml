@@ -243,7 +243,7 @@
     <string name="faq_6_title">Cum pot modifica sau șterge un tip de eveniment existent?</string>
     <string name="faq_6_text">Poți face ambele lucruri în setările aplicației - Gestionează tipurile de evenimente. Trebuie doar să apeși pe cel dorit pentru a schimba eticheta și culoarea sau selectează-l prin apăsare lungă și folosește coșul de gunoi din meniul de sus pentru a-l șterge.</string>
     <string name="export_past_entries">Exportă și intrările trecute</string>
-    <string name="app_launcher_name">Calendar</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="no_upcoming_events">Niciun eveniment următor.</string>
     <string name="everything_filtered_out">Ai eliminat prin filtrare toate tipurile de evenimente</string>
     <string name="event_color">Culoare eveniment</string>

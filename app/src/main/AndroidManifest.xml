@@ -62,6 +62,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- Brax tool registry: which local tools this app offers to agent cards, and the link each one maps to. -->
+        <meta-data
+            android:name="net.braxtech.tools"
+            android:resource="@raw/brax_tools" />
+
         <activity
             android:name=".activities.SplashActivity"
             android:launchMode="singleTask"
@@ -97,6 +102,14 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.item/event" />
+            </intent-filter>
+
+            <!-- Brax: braxcal://day/<date>, braxcal://event/<uid>, braxcal://draft?... (helpers/BraxLinks.kt) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="braxcal" />
             </intent-filter>
         </activity>
 

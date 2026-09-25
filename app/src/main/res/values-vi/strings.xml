@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Lịch</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="weeks_raw">tuần</string>
     <string name="years_raw">năm</string>
     <string name="repeat_till_date">Lặp cho tới một ngày</string>

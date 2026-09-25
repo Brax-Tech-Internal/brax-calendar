@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Təqvim</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="change_view">Görünüşü dəyiş</string>
     <string name="daily_view">Günlük görünüş</string>
     <string name="weekly_view">Həftəlik görünüş</string>

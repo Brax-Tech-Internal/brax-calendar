@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Calendário</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="no_upcoming_events">Não existem eventos próximos.</string>
     <string name="simple_event_list">Lista de eventos</string>
     <plurals name="within_the_next_weeks">

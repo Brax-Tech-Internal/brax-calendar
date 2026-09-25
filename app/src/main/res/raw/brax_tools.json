@@ -1,0 +1,27 @@
+{
+  "schema": "urn:brax:tools:1",
+  "app": "calendar",
+  "tools": {
+    "calendar.open_event": {
+      "label": "Open in Calendar",
+      "link": "braxcal://event/{event_id}",
+      "schema": { "event_id": "string" },
+      "confirm": false,
+      "shared": true
+    },
+    "calendar.open_day": {
+      "label": "Open day",
+      "link": "braxcal://day/{date}",
+      "schema": { "date": "string" },
+      "confirm": false,
+      "shared": false
+    },
+    "calendar.create_event": {
+      "label": "New event",
+      "link": "braxcal://draft?title={title}&start={start}&end={end}",
+      "schema": { "title": "string", "start": "string", "end": "string" },
+      "confirm": true,
+      "shared": false
+    }
+  }
+}

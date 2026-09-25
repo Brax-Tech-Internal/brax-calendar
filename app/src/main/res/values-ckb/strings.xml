@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">ساڵنامە</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="change_view">گۆڕینی بینین</string>
     <string name="daily_view">پیشاندانی ڕۆژانە</string>
     <string name="weekly_view">پیشاندانی حەفتانە</string>

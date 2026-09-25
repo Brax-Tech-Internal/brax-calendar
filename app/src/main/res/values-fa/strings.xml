@@ -2,7 +2,7 @@
 <resources>
     <string name="simple_event_list">فهرست رویدادهای ساده</string>
     <string name="event">رویداد</string>
-    <string name="app_launcher_name">تقویم</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="edit_event">ویرایش رویداد</string>
     <string name="new_event">رویداد جدید</string>
     <string name="create_new_event">ایجاد رویداد جدید</string>

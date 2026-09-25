@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Koledar</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="change_view">Sprememba pogleda</string>
     <string name="daily_view">Dnevni pogled</string>
     <string name="weekly_view">Tedenski pregled</string>

@@ -2,6 +2,7 @@ package org.fossify.calendar.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
@@ -43,6 +44,8 @@ import org.fossify.calendar.fragments.WeekFragmentsHolder
 import org.fossify.calendar.fragments.YearFragmentsHolder
 import org.fossify.calendar.helpers.ANNIVERSARY_EVENT
 import org.fossify.calendar.helpers.BIRTHDAY_EVENT
+import org.fossify.calendar.helpers.BRAX_SCHEME
+import org.fossify.calendar.helpers.BraxLink
 import org.fossify.calendar.helpers.DAILY_VIEW
 import org.fossify.calendar.helpers.DAY_CODE
 import org.fossify.calendar.helpers.EVENTS_LIST_VIEW
@@ -52,6 +55,8 @@ import org.fossify.calendar.helpers.FETCH_INTERVAL
 import org.fossify.calendar.helpers.FLAG_ALL_DAY
 import org.fossify.calendar.helpers.FLAG_MISSING_YEAR
 import org.fossify.calendar.helpers.Formatter
+import org.fossify.calendar.helpers.findEventIdByUid
+import org.fossify.calendar.helpers.parseBraxLink
 import org.fossify.calendar.helpers.Formatter.DAYCODE_PATTERN
 import org.fossify.calendar.helpers.HolidayHelper
 import org.fossify.calendar.helpers.INITIAL_EVENTS
@@ -397,8 +402,8 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        checkIsOpenIntent()
         checkIsViewIntent()
+        checkIsOpenIntent()
     }
 
     private fun storeStateVariables() {
@@ -551,6 +556,14 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
     }
 
     private fun checkIsViewIntent() {
+        if (intent?.action == Intent.ACTION_VIEW && intent.data?.scheme == BRAX_SCHEME) {
+            // braxcal:// links from the Brax chat app (agent cards); see helpers/BraxLinks.kt for the contract.
+            val uri = intent.data!!
+            intent.data = null
+            handleBraxLink(uri)
+            return
+        }
+
         if (intent?.action == Intent.ACTION_VIEW && intent.data != null) {
             val uri = intent.data
             if (
@@ -1565,6 +1578,51 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     override fun refreshItems() {
         refreshViewPager()
+    }
+
+    private fun handleBraxLink(uri: Uri) {
+        when (val link = parseBraxLink(uri)) {
+            is BraxLink.Day -> {
+                // Hand over to checkIsOpenIntent(), which runs right after this on both cold start and onNewIntent.
+                intent.putExtra(DAY_CODE, link.dayCode)
+                intent.putExtra(VIEW_TO_OPEN, DAILY_VIEW)
+            }
+
+            is BraxLink.Event -> ensureBackgroundThread {
+                val id = findEventIdByUid(link.uid)
+                runOnUiThread {
+                    if (id != null) {
+                        hideKeyboard()
+                        Intent(this, EventActivity::class.java).apply {
+                            putExtra(EVENT_ID, id)
+                            startActivity(this)
+                        }
+                    } else {
+                        toast(R.string.caldav_event_not_found, Toast.LENGTH_LONG)
+                    }
+                }
+            }
+
+            is BraxLink.Draft -> {
+                // A prefilled, unsaved event: the person still reviews and saves it themselves.
+                val start = link.startMillis ?: System.currentTimeMillis()
+                val end = link.endMillis ?: (start + config.defaultDuration * 60_000L)
+                hideKeyboard()
+                Intent(this, EventActivity::class.java).apply {
+                    action = Intent.ACTION_INSERT
+                    putExtra("title", link.title)
+                    putExtra("beginTime", start)
+                    putExtra("endTime", end)
+                    putExtra("allDay", link.allDay)
+                    putExtra("eventLocation", link.location)
+                    putExtra("description", link.description)
+                    startActivity(this)
+                }
+            }
+
+            is BraxLink.Invalid -> toast(getString(R.string.brax_link_invalid, link.reason), Toast.LENGTH_LONG)
+            null -> {}
+        }
     }
 
     private fun openDayAt(timestamp: Long) {

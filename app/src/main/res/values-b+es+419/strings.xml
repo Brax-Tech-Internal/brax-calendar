@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Calendario</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="change_view">Cambiar vista</string>
     <string name="daily_view">Vista diaria</string>
     <string name="weekly_view">Vista semanal</string>

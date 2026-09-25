@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">कैलेंडर</string>
+    <string name="app_launcher_name">Brax Calendar</string>
     <string name="change_view">दृश्य बदले</string>
     <string name="monthly_view">मासिक दृश्य</string>
     <string name="monthly_daily_view">मासिक और दैनिक दृश्य</string>
