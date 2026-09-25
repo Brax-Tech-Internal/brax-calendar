@@ -1589,7 +1589,17 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
             }
 
             is BraxLink.Event -> ensureBackgroundThread {
-                val id = findEventIdByUid(link.uid)
+                // A card can arrive before the sync adapter has pulled the event: ask for a sync and wait a little
+                // before giving up, instead of showing "not found" for something that exists on the server.
+                var id = findEventIdByUid(link.uid)
+                if (id == null && requestCalendarSync()) {
+                    for (attempt in 0 until 12) {
+                        Thread.sleep(1000)
+                        calDAVHelper.refreshCalendars(showToasts = false, scheduleNextSync = false) {}
+                        id = findEventIdByUid(link.uid)
+                        if (id != null) break
+                    }
+                }
                 runOnUiThread {
                     if (id != null) {
                         hideKeyboard()
@@ -1622,6 +1632,21 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
             is BraxLink.Invalid -> toast(getString(R.string.brax_link_invalid, link.reason), Toast.LENGTH_LONG)
             null -> {}
+        }
+    }
+
+    /** Ask the sync adapters (DAVx5 or another) for an expedited pull of every calendar account. */
+    private fun requestCalendarSync(): Boolean {
+        if (!hasPermission(PERMISSION_READ_CALENDAR)) return false
+        return try {
+            val extras = Bundle().apply {
+                putBoolean(android.content.ContentResolver.SYNC_EXTRAS_MANUAL, true)
+                putBoolean(android.content.ContentResolver.SYNC_EXTRAS_EXPEDITED, true)
+            }
+            android.content.ContentResolver.requestSync(null, android.provider.CalendarContract.AUTHORITY, extras)
+            true
+        } catch (_: Exception) {
+            false
         }
     }
 
